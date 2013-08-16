@@ -2,6 +2,7 @@ require 'spec_helper'
 
 module Overlaps
   describe InputParser do
+    subject(:klass) {Class.new {extend InputParser}}
     let(:valid_input) {[(1..10), (1..5), (3..7)]}
     
     it 'stores input when valid'
@@ -9,14 +10,14 @@ module Overlaps
     context '#valid_input?' do
       context 'raises an error when given' do
         it 'a non-array object' do
-          expect {valid_input?(Hash.new)}.to raise_error(TypeError)
+          expect {klass.valid_input?(Hash.new)}.to raise_error(TypeError)
         end
         context 'an array' do
           it 'that contains anything other than range objects' do
-            expect {valid_input?(Hash.new)}.to raise_error(TypeError)
+            expect {klass.valid_input?([1,2,3])}.to raise_error(TypeError)
           end
           it 'of range objects where the start/end points of each range are not all the same class' do
-            expect {valid_input?(Hash.new)}.to raise_error(TypeError)
+            expect {klass.valid_input?([(1..5), ('a'..'b')])}.to raise_error(TypeError)
           end
         end
       end
