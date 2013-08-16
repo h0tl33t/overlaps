@@ -2,15 +2,15 @@ require 'spec_helper'
 
 module Overlaps
   describe EndPoint do
-    it 'has a value'
-    it 'has an id it belongs to'
+    subject {EndPoint.new(10, 1)}
     
-    context "#start?" do
-      it 'returns false'
-    end
+    it {should respond_to(:value)}
+    it {should respond_to(:id)}
     
-    context "#end?" do
-      it 'returns true'
-    end
+    its(:value) {should == 10}
+    its(:id) {should == 1}
+    
+    it {should_not be_start}
+    it {should be_end}
   end
 end
