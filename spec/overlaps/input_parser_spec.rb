@@ -3,7 +3,19 @@ require 'spec_helper'
 module Overlaps
   describe InputParser do
     subject(:klass) {Class.new {extend InputParser}}
-    let(:valid_input) {[(1..10), (1..5), (3..7)]}
+    let(:valid_range_input) {[(1..10), (1..5), (3..7)]}
+    
+    ActiveRecord = Module.new #Bad Idea?
+    ActiveRecord::Base = Class.new #Even worse idea?
+    Test = Class.new(ActiveRecord::Base) do
+      attr_accessor :start_point, :end_point
+      def initialize(s, e)
+        self.start_point = s
+        self.end_point = e
+      end
+    end
+            
+    let(:valid_ar_input) {[Test.new(1, 10), Test.new(1,5), Test.new(3, 6)] }
     
     context '#valid_input?' do
       context 'raises an error when given' do
@@ -14,8 +26,15 @@ module Overlaps
         
         context 'an array' do
           context 'of ActiveRecord objects' do
-            it 'without knowing the attributes for the start and end points'
-            it 'where the start and end points do not form a valid range'
+            let(:invalid_ar_input) {valid_ar_input << Test.new('a',8)}
+            
+            it 'without knowing the attributes for the start and end points' do
+              expect {klass.valid_input?(invalid_ar_input)}.to raise_error(InputParser::MissingParameter)
+            end
+            
+            it 'where the start and end points do not form a valid range' do
+              expect {klass.valid_input?(invalid_ar_input, :start_point, :end_point)}.to raise_error(TypeError)
+            end
           end
             
           it 'that contains anything other than Range or ActiveRecord objects' do
@@ -31,17 +50,19 @@ module Overlaps
       
       context 'returns true when given' do
         it 'an array of ranges where all start/end points are the same class' do
-          klass.valid_input?(valid_input).should be_true
+          klass.valid_input?(valid_range_input).should be_true
         end
         
-        it 'an array of ActiveRecord objects with start/end points that form a valid range'
+        it 'an array of ActiveRecord objects with start/end points that form a valid range' do
+          klass.valid_input?(valid_ar_input, :start_point, :end_point).should be_true
+        end
       end
     end
     
     context '#parse_input' do
       it 'checks validity of input' do
         klass.should_receive( :valid_input? )
-        klass.parse_input(valid_input)
+        klass.parse_input(valid_range_input)
       end
       
       context 'when given valid input' do
