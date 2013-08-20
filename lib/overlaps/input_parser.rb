@@ -10,5 +10,9 @@ module Overlaps
       end
       true #If we get through each array element, verifying it is both a range and that its start/end points share a class with all the other ranges, return true.
     end
+    
+    def parse_input(ranges)
+      valid_input?(ranges)
+    end
   end
 end
