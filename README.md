@@ -27,10 +27,16 @@ Or install it yourself as:
 
 ## Usage
 
-Include the Overlaps module in the class you want to manage overlaps in your application.  The class now has access to the count_overlaps and find_overlaps methods (from Overlaps::ClassMethods).
+Include the Overlaps module in the class you want to manage overlaps in your application (class Klass; include Overlaps; end).  The class now has access to the count_overlaps and find_overlaps methods (from Overlaps::ClassMethods).
 
-Both methods expect an array of Range objects.  You may also feed them an array of objects with a hash containing the start point attribute and end point attribute:
+Both methods expect an array of Range objects.
 
+    Klass.count_overlaps(array_of_ranges)
+    Klass.find_overlaps(array_of_ranges)
+
+You may also feed them an array of objects with a hash containing the start point attribute and end point attribute:
+
+    Klass.count_overlaps(array_of_objects, start_attr: 's', end_attr: :e)
     Klass.find_overlaps(array_of_objects, start_attr: 's', end_attr: :e)
 
 Overlaps::ClassMethods::count_overlaps returns a Fixnum count:
