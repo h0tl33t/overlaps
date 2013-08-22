@@ -25,14 +25,23 @@ Or install it yourself as:
 Include the Overlaps module in the class you want to manage overlaps in your application (class Klass; include Overlaps; end).  The class now has access to the count_overlaps and find_overlaps methods (from Overlaps::ClassMethods).
 
 Both methods expect an array of Range objects where the start and end points for each range in the array must all be of the same class.
-
+    
+    array_of_ranges = [1..100, 25..55, 30..110, 10..27]
     Klass.count_overlaps(array_of_ranges)
     Klass.find_overlaps(array_of_ranges)
 
-You may also feed them an array of objects with a hash containing the start point attribute and end point attribute:
+You may also feed them an array of objects with a hash containing the start point attribute and end point attribute (as symbol or string):
 
-    Klass.count_overlaps(array_of_objects, start_attr: 's', end_attr: :e)
-    Klass.find_overlaps(array_of_objects, start_attr: 's', end_attr: :e)
+    class ObjWithRange
+      attr_accessor :s, :e
+      def initialize(attrs = {})
+        @s, @e = attrs[:s], attrs[:e]
+      end
+    end
+    
+    array_of_objects = [ObjWithRange.new(s: 1, e: 10), ObjWithRange.new(s: 1, e: 5), ObjWithRange.new(s: 3, e: 6)]
+    Klass.count_overlaps(array_of_objects, start_attr: :s, end_attr: :e)
+    Klass.find_overlaps(array_of_objects, start_attr: 's', end_attr: 'e')
 
 Overlaps::ClassMethods::count_overlaps returns a Fixnum count:
 
@@ -40,11 +49,6 @@ Overlaps::ClassMethods::count_overlaps returns a Fixnum count:
     
 Overlaps::ClassMethods::find_overlaps returns an array of Overlap objects, where each overlap captures the following (with example output):
 
-  Method Call (either array of ranges or objects with start/end point attributes)
-  
-    Klass.find_overlaps(array_of_ranges)
-    Klass.find_overlaps(array_of_objects, start_attr: 's', end_attr: :e) #Pass accessor as symbol or string
-    
   Start Point Value
   
     overlap.start_point => 1
