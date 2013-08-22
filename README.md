@@ -71,20 +71,16 @@ Also, you may pass a specific attribute to use as the id.  When an array of Rang
 ## Example Use Case
 Say we had a list of Zombie objects (zombies, where the Zombie class has included Overlaps) with a :name attribute ('Bob', 'Karen', 'Frank'), :date_of_birth attribute, and :date_turned_zombie attribute that looked something like this:
 
-    zombies => [#<Zombie:0x2c78220 @name="Bob", @date_of_birth=#<Date: 1920-01-21 ((2422345j,0s,0n),+0s,2299161j)>, @date_turned_zombie=#<Date
-: 1950-06-20 ((2433453j,0s,0n),+0s,2299161j)>>, #<Zombie:0x2c70e88 @name="Karen", @date_of_birth=#<Date: 1927-03-10 ((2424950j,0s,
-0n),+0s,2299161j)>, @date_turned_zombie=#<Date: 1950-07-04 ((2433467j,0s,0n),+0s,2299161j)>>, #<Zombie:0x2c69a60 @name="Frank", @d
-ate_of_birth=#<Date: 1938-10-15 ((2429187j,0s,0n),+0s,2299161j)>, @date_turned_zombie=#<Date: 1950-11-27 ((2433613j,0s,0n),+0s,229
-9161j)>>]
+    zombies => [#<Zombie:0x2c78220 @name="Bob", @date_of_birth=#<Date: 1920-01-21 ((2422345j,0s,0n),+0s,2299161j)>, @date_turned_zombie=#<Date: 1950-06-20 ((2433453j,0s,0n),+0s,2299161j)>>,
+    #<Zombie:0x2c70e88 @name="Karen", @date_of_birth=#<Date: 1927-03-10 ((2424950j,0s,0n),+0s,2299161j)>, @date_turned_zombie=#<Date: 1950-07-04 ((2433467j,0s,0n),+0s,2299161j)>>,
+    #<Zombie:0x2c69a60 @name="Frank", @date_of_birth=#<Date: 1938-10-15 ((2429187j,0s,0n),+0s,2299161j)>, @date_turned_zombie=#<Date: 1950-11-27 ((2433613j,0s,0n),+0s,2299161j)>>]
 
  If we wanted to find the overlap periods where each of them were alive and not yet a zombie, we could call find_overlaps like so:
  
     Zombie.find_overlaps(zombies, start_attr: :date_of_birth, end_attr: :date_turned_zombie, id_attr: :name)
-    => [#<Overlaps::Overlap:0x2f47d10 @start_point=#<Date: 1938-10-15 ((2429187j,0s,0n),+0s,2299161j)>, @end_point=#<Date: 1950-06-20
-((2433453j,0s,0n),+0s,2299161j)>, @ids=["Bob", "Karen", "Frank"]>, #<Overlaps::Overlap:0x2f47ce0 @start_point=#<Date: 1927-03-10 (
-(2424950j,0s,0n),+0s,2299161j)>, @end_point=#<Date: 1950-06-20 ((2433453j,0s,0n),+0s,2299161j)>, @ids=["Bob", "Karen"]>, #<Overlap
-s::Overlap:0x2f47c68 @start_point=#<Date: 1938-10-15 ((2429187j,0s,0n),+0s,2299161j)>, @end_point=#<Date: 1950-07-04 ((2433467j,0s
-,0n),+0s,2299161j)>, @ids=["Karen", "Frank"]>]
+    => [#<Overlaps::Overlap:0x2f47d10 @start_point=#<Date: 1938-10-15 ((2429187j,0s,0n),+0s,2299161j)>, @end_point=#<Date: 1950-06-20((2433453j,0s,0n),+0s,2299161j)>, @ids=["Bob", "Karen", "Frank"]>,
+    #<Overlaps::Overlap:0x2f47ce0 @start_point=#<Date: 1927-03-10 ((2424950j,0s,0n),+0s,2299161j)>, @end_point=#<Date: 1950-06-20 ((2433453j,0s,0n),+0s,2299161j)>, @ids=["Bob", "Karen"]>,
+    #<Overlaps::Overlap:0x2f47c68 @start_point=#<Date: 1938-10-15 ((2429187j,0s,0n),+0s,2299161j)>, @end_point=#<Date: 1950-07-04 ((2433467j,0s,0n),+0s,2299161j)>, @ids=["Karen", "Frank"]>]
 
   If we simply wanted to count the number of overlapping periods, we could call count_overlaps like so:
   
