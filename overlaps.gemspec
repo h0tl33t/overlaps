@@ -8,9 +8,9 @@ Gem::Specification.new do |spec|
   spec.version       = Overlaps::VERSION
   spec.authors       = ["Ryan Stenberg"]
   spec.email         = ["h0tl33t@gmail.com"]
-  spec.description   = %q{TODO: Write a gem description}
-  spec.summary       = %q{TODO: Write a gem summary}
-  spec.homepage      = ""
+  spec.description   = %q{Overlaps enables a class to either count or find overlaps between a set of ranges.}
+  spec.summary       = %q{Overlaps, when included in a class, enables that class to #count_overlaps or #find_overlaps when given an array of Range objects or objects that have start and end point-type attributes.}
+  spec.homepage      = "https://github.com/h0tl33t/overlaps"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)
