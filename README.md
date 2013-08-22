@@ -55,17 +55,17 @@ Overlaps::ClassMethods::find_overlaps returns an array of Overlap objects, where
     
   End Point Value
   
-    overlap.end_point => 10
+    overlap.end_point => 5
     
   Range
   
-    overlap.range => 1..10
+    overlap.range => 1..5
     
-  Ids Sharing the Overlap
+  IDs of Each Range that Shares the Overlap
   
-    overlap.ids => [1,5,7]
+    overlap.ids => [0,1]
     
-Also, you may pass a specific attribute to use as the id.  When an array of Ranges is given, the id is set to the index of range as it appears in the original input array.  When an array of non-Ranges is given, it looks for an :id attribute by default.  If an :id attribute is not found, it falls back to the index of the object as it appears in the original input array.
+Also, you may pass a specific attribute to use as the id.  When an array of Ranges is given, the id is set to the index of range as it appears in the original input array.  When an array of non-Ranges is given, it looks for an :id attribute by default.  If an :id attribute is not found, it falls back to the index of the object as it appears in the original input array.  The following section provides an example of setting the id to a specific object attribute.
 
 ## Example Use Case
 Say we had a list of Zombie objects (zombies, where the Zombie class has included Overlaps) with :name, :date_of_birth, and :date_turned_zombie attributes that looked something like this:
