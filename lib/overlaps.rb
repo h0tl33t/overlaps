@@ -15,14 +15,13 @@ module Overlaps
   end
   
   module ClassMethods
-    #include Overlaps::InputParser
     def count_overlaps(input_array)
       points = Overlaps::parse_input(input_array) if Overlaps::valid_input?(input_array) #Validate array of ranges, then parse into a sorted array of StartPoint and EndPoint objects.
       overlap_counter = -1 #Starts at negative 1, knowing that the first start element would start the counter at 0.
       overlap_tally = points.inject(0) do |tally, point|
-        if point.class == StartPoint
+        if point.start?
           overlap_counter += 1 #If we run into a start_point, increment the overlap_counter.
-        elsif point.class == EndPoint #If we run into an end point..
+        elsif point.end? #If we run into an end point..
           tally += overlap_counter #Add the current overlap_counter number of overlaps to the overall tally, noting the number of overlaps that are shared with the end point encountered.
           overlap_counter -= 1 #Decrement the overlap counter, noting that one of the ranges was closed out.
         end
@@ -37,10 +36,10 @@ module Overlaps
       overlap_counter = -1 #Starts at negative 1, knowing that the first start element would start the counter at 0.
 
       points.inject([]) do |start_stack, point|
-        if point.class == StartPoint
+        if point.start?
           overlap_counter += 1 #If we run into a start_point, increment the overlap_counter.
           start_stack.push(point)
-        elsif point.class == EndPoint
+        elsif point.end?
           overlaps_to_make = overlap_counter #If we run into an end_point, capture the current overlap counter pre-decrement so we know how many overlaps to construct.
           overlap_counter -= 1 #If we run into an end_point, decrement the overlap_counter.
           overlaps << build_overlaps(start_stack.dup, point, overlaps_to_make) #Returns array of overlaps (as hashes) in format {overlap: (start..end), indices: [all start indices]}
