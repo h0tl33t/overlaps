@@ -1,8 +1,8 @@
 # Overlaps
 
 The Overlaps module enables a class to either count or find overlaps in an array of:
-1. Range objects
-2. Objects that have start and end point-type attributes that form a valid range.
+  1. Range objects
+  2. Objects that have start and end point-type attributes that form a valid range.
 
 The main purpose of Overlaps -- given a set of ranges -- is to find all possible overlaps and have information about which ranges belong to/share in a given overlap.
 
