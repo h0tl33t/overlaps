@@ -1,7 +1,7 @@
 module Overlaps
   module InputParser
     class MissingParameter < StandardError; end
-    
+
     def valid_input?(objects, start_attr = nil, end_attr = nil)
       raise TypeError, "Expecting an Array object, got a #{objects.class} instead." unless objects.class == Array #Ensure Overlaps is receiving an Array object.
       classes_in_range = []
@@ -18,16 +18,16 @@ module Overlaps
       end
       true #If we get through each array element, verifying it is both a range and that its start/end points share a class with all the other ranges, return true.
     end
-    
+
     def grab_id(obj, id = nil)
       id ||= :id
       obj.respond_to?(id) ? obj.send(id) : nil
     end
-    
+
     def convert_range_to_points(range, id)
       return StartPoint.new(range.first, id), EndPoint.new(range.last, id)
     end
-    
+
     def parse_input(objects, accessors = {})
       valid_input?(objects, accessors[:start_attr], accessors[:end_attr])
       output = []
