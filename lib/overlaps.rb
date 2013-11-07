@@ -16,6 +16,6 @@ module Overlaps
   end
 
   def self.count(ranges, accessors = {})
-    Overlaps::OverlapFactory.build_with(ranges, accessors).size
+    find(ranges, accessors).size
   end
 end

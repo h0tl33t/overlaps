@@ -7,9 +7,15 @@ module Overlaps
 
     def initialize(range_collection)
       @count = -1
-      @start_points = []
-      @overlaps = []
       range_collection.points.each { |point| process(point) }
+    end
+
+    def overlaps
+      @overlaps ||= []
+    end
+
+    def start_points
+      @start_points ||= []
     end
 
     def process(point)
@@ -22,12 +28,8 @@ module Overlaps
     end
 
     def store_start_point(point)
-      @start_points << point
+      start_points << point
       @count += 1
-    end
-
-    def start_points
-      @start_points.dup
     end
 
     def start_ids
@@ -35,21 +37,17 @@ module Overlaps
     end
 
     def build_overlap(end_point)
-      stack_of_start_points = start_points
+      stack_of_start_points = start_points.dup
       ids = start_ids
       @count.times do
-        @overlaps << Overlaps::Overlap.new(stack_of_start_points.pop.value, end_point.value, ids.dup)
+        overlaps << Overlaps::Overlap.new(stack_of_start_points.pop.value, end_point.value, ids.dup)
         ids.pop
       end
     end
 
     def close_out_range(end_point)
-      @start_points.delete_if {|start| start.id == end_point.id}
+      start_points.delete_if {|start| start.id == end_point.id}
       @count -= 1
-    end
-
-    def overlaps
-      @overlaps
     end
   end
 end
