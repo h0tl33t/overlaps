@@ -35,13 +35,13 @@ module Overlaps
     end
 
     def determine_id(range, accessors)
-      method = accessors.fetch(:id)
+      method = accessors[:id]
       if method && range.respond_to?(method)
         range.send(method)
       elsif range.respond_to?(:id)
         range.send(:id)
       else
-        accessors.fetch(:id)
+        accessors.fetch(:index)
       end
     end
 
