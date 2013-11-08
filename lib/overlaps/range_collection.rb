@@ -11,7 +11,7 @@ module Overlaps
     end
 
     def points
-      ranges.map(&:points).flatten.sort_by { |point| point.value}
+      ranges.map(&:points).flatten.sort
     end
 
     private

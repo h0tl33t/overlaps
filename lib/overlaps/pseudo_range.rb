@@ -17,7 +17,7 @@ module Overlaps
     end
 
     def type
-      @start_point.class
+      @start_point.value.class
     end
 
     private
@@ -28,19 +28,20 @@ module Overlaps
         @end_point = range.last
         @id = accessors.fetch(:index) { raise ArgumentError, 'Must provide the :index key/value option when given a Range object.' }
       else
-        @start_point = accessors.fetch(:start) { raise ArgumentError, 'Must provide the :start key/value option when given a non-Range object.' }
-        @end_point = accessors.fetch(:end) { raise ArgumentError, 'Must provide the :end key/value option when given a non-Range object.' }
+        @start_point = range.send accessors.fetch(:start) { raise ArgumentError, 'Must provide the :start key/value option when given a non-Range object.' }
+        @end_point = range.send accessors.fetch(:end) { raise ArgumentError, 'Must provide the :end key/value option when given a non-Range object.' }
         @id = determine_id(range, accessors)
       end
     end
 
     def determine_id(range, accessors)
-      id = accessors.fetch(:id) { range.responds_to?(:id) ? range.id : accessors.fetch(:index) }
-
-      if id && range.responds_to?(id)
-        range.send(id)
+      method = accessors.fetch(:id)
+      if method && range.respond_to?(method)
+        range.send(method)
+      elsif range.respond_to?(:id)
+        range.send(:id)
       else
-        id
+        accessors.fetch(:id)
       end
     end
 

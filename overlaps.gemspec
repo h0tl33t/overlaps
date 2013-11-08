@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = Overlaps::VERSION
   spec.authors       = ["Ryan Stenberg"]
   spec.email         = ["h0tl33t@gmail.com"]
-  spec.description   = %q{Overlaps enables a class to either count or find overlaps between a set of ranges.}
-  spec.summary       = %q{Overlaps, when included in a class, enables that class to #count_overlaps or #find_overlaps when given an array of Range objects or objects that have start and end point-type attributes.}
+  spec.description   = %q{Overlaps aids in finding shared overlaps between a set of Range or Range-like objects.}
+  spec.summary       = %q{Overlaps lets you #find or #count overlaps in a given set of Range or Range-like objects.}
   spec.homepage      = "https://github.com/h0tl33t/overlaps"
   spec.license       = "MIT"
 
@@ -20,4 +20,5 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency "bundler", "~> 1.3"
   spec.add_development_dependency "rake"
+  spec.add_development_dependency "rspec"
 end

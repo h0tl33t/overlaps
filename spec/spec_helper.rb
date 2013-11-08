@@ -18,12 +18,3 @@ RSpec.configure do |config|
   #     --seed 1234
   config.order = 'random'
 end
-
-class ObjectWithRange
-  attr_accessor :id, :start_point, :end_point
-  def initialize(s, e, i = nil)
-    self.id = i
-    self.start_point = s
-    self.end_point = e
-  end
-end
