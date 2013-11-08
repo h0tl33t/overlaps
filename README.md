@@ -24,19 +24,19 @@ Or install it yourself as:
 
 Require the Overlaps module and call either #find or #count.  You can feed them two main types of input:
 
-  1. Array of Range objects where all range start/end points are of the same class:
+Array of Range objects where all range start/end points are of the same class:
 
-      array_of_ranges = [1..100, 25..55, 30..110, 10..27]
-      Overlaps.find(array_of_ranges)
-      Overlaps.count(array_of_ranges)
+    array_of_ranges = [1..100, 25..55, 30..110, 10..27]
+    Overlaps.find(array_of_ranges)
+    Overlaps.count(array_of_ranges)
 
-  2. Array of Range-like objects where each object is of the same class and the start and end point attribute/accessors are passed as values in an options hash to the :start and :end keys:
+Array of Range-like objects where each object is of the same class and the start and end point attribute/accessors are passed as values in an options hash to the :start and :end keys:
 
-      PseudoRange = Struct.new(:start_point, :end_point)
+    PseudoRange = Struct.new(:start_point, :end_point)
 
-      array_of_objects = [ PseudoRange.new(1,10), PseudoRange.new(1,5), PseudoRange.new(3,6) ]
-      Overlaps.find(array_of_objects, start: :start_point, end: :end_point)
-      Overlaps.count(array_of_objects, start: :start_point, end: :end_point)
+    array_of_objects = [ PseudoRange.new(1,10), PseudoRange.new(1,5), PseudoRange.new(3,6) ]
+    Overlaps.find(array_of_objects, start: :start_point, end: :end_point)
+    Overlaps.count(array_of_objects, start: :start_point, end: :end_point)
 
 Overlaps.count returns a Fixnum count:
 
